@@ -40,12 +40,15 @@ class MyHomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            GestureDetector(
-              child: const Text("click in to login with your account"),
-              onTap: () {
+            TextButton(
+              onPressed: () {
                 // ignore: avoid_print
                 Navigator.pushNamed(context, '/login_signup');
               },
+              style: TextButton.styleFrom(
+                        backgroundColor: Colors.black, // Background Color),
+              ),
+              child: const Text("click me, to login with your account"),
             ),
           ],
         ),
