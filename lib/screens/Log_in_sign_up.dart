@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:registration/controllers/vlaidation.dart';
 
-class Log_in_sign_up extends StatelessWidget {
-  double kPagePadding=20;
+class Log_in_sign_up extends StatefulWidget {
+  const Log_in_sign_up({super.key});
+
+  @override
+  State<Log_in_sign_up> createState() => _Log_in_sign_upState();
+}
+
+class _Log_in_sign_upState extends State<Log_in_sign_up> {
+  double kPagePadding = 20;
+  login_signup_validation validationObj = login_signup_validation();
+  bool emailValidFlag = false;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -12,16 +23,17 @@ class Log_in_sign_up extends StatelessWidget {
             "Log in or Sign up",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          actions: [IconButton(
-          icon: const Icon(
-            Icons.close,
-            color: Colors.black,
-            
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        )] ,
+          actions: [
+            IconButton(
+              icon: const Icon(
+                Icons.close,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -39,13 +51,18 @@ class Log_in_sign_up extends StatelessWidget {
                     'Email',
                     style: TextStyle(color: Colors.cyan),
                   ),
-                  const TextField(
-                    decoration: InputDecoration(
+                  TextField(
+                    decoration: const InputDecoration(
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.cyan),
                       ),
                       hintText: 'Enter email address',
                     ),
+                    onChanged: (value) {
+                      setState(() {
+                        emailValidFlag = validationObj.checkEmail(value);
+                      });
+                    },
                   ),
                 ],
               ),
@@ -78,11 +95,13 @@ class Log_in_sign_up extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.only(top: 10),
                     width: double.infinity,
-                    child: TextButton(
-                      onPressed: () {
-                        print("lla");
-                      },
-                      style: TextButton.styleFrom(
+                    child: ElevatedButton(
+                      onPressed: emailValidFlag
+                          ? () {
+                              Navigator.pop(context);
+                            }
+                          : null,
+                      style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange, // Background Color),
                       ),
                       child: const Text(
