@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:registration/controllers/userData.dart';
+import 'package:registration/screens/LogIn.dart';
 import 'package:registration/screens/Log_in_sign_up.dart';
+import 'package:registration/screens/signUp.dart';
+import 'package:provider/provider.dart';
+import 'package:registration/screens/updatePassword.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,17 +16,23 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Registration Home Page',
-      theme: ThemeData(
-        primarySwatch: Colors.cyan,
-        appBarTheme: const AppBarTheme(foregroundColor: Colors.black ,backgroundColor: Colors.white,)
+    return ChangeNotifierProvider(
+      create: (context) => userData(),
+      child: MaterialApp(
+        title: 'Registration Home Page',
+        theme: ThemeData(
+          primarySwatch: Colors.cyan,
+          appBarTheme: const AppBarTheme(foregroundColor: Colors.black ,backgroundColor: Colors.white,)
+        ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const MyHomePage(),
+          '/login_signup':(context) => Log_in_sign_up(),
+          '/signUp':(context) => signUp(),
+          '/logIn':(context) => logIn(),
+          '/updatePassword': (context) => updatePassword(),
+        },
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const MyHomePage(),
-        '/login_signup':(context) => Log_in_sign_up(),
-      },
     );
   }
 }
